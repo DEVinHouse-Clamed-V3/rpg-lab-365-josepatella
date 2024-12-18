@@ -88,7 +88,7 @@ class Personagem {
     oponente.vida -= dano
     console.log(`${oponente.nome} foi atingido pelo ${this.nome} e teve ${dano} pontos de dano!`);
     if (oponente.vida <= 0) {
-      console.log(`Você foi derrotado!`)
+      console.log(`${oponente.nome} foi derrotado!`)
       oponente.vida = 0
     }
   }
@@ -125,6 +125,18 @@ class Inimigo extends Personagem {
       }
 }
 
+class King extends Personagem {
+    atacar(oponente: Personagem) {
+        const chanceDesucesso = Math.random()
+        if (chanceDesucesso < 0.1) {
+          console.log(`${this.getNome()} errou o ataque no ${oponente.getNome()}!`)
+        } else {
+          const dano = 2 * (this.calcularDano())
+          this.receberDano(dano, oponente)
+        }
+      }
+}
+
 const espadaLonga = new Arma(
     'Espada Longa',
     30,
@@ -151,8 +163,11 @@ const ladrao = new Inimigo("Ladrão Sorrateiro", 90, 12, null);
 
 const cavaleiro = new Personagem("Cavaleiro rápido", 100, 30, espadaLonga);
 
+const rei = new King("Rei da Asturia", 200, 50, machadoDeBatalha)
+
 cavaleiro.atacar(guerreiro)
 mago.atacar(cavaleiro)
 arqueiro.comportamentoAleatorio(cavaleiro)
 cavaleiro.atacar(ladrao)
-curandeiro.comportamentoAleatorio(cavaleiro)
+curandeiro.comportamentoAleatorio(rei)
+rei.atacar(guerreiro)

@@ -74,7 +74,7 @@ class Personagem {
   }
 
   // Métodos
-  atacar(oponente: Personagem) {
+  atacar(oponente: Inimigo) {
     const chanceDesucesso = Math.random()
     if (chanceDesucesso < 0.5) {
       console.log("Errou o ataque!")
@@ -89,7 +89,7 @@ class Personagem {
     console.log(`Você foi atingido e teve ${dano} pontos de dano!`);
     if (oponente.vida <= 0) {
       console.log(`Você foi derrotado!`)
-      oponente.vida = 0 // Evita valores negativos
+      oponente.vida = 0
     }
   }
 
@@ -101,4 +101,26 @@ class Personagem {
   equiparArma(arma: Arma){
     this.setArma(arma)
   }
+}
+
+class Inimigo extends Personagem {
+    // Métodos
+    atacar(oponente: Personagem) {
+        const chanceDesucesso = Math.random()
+        if (chanceDesucesso < 0.2) {
+          console.log("Errou o ataque!")
+        } else {
+          const dano = this.calcularDano()
+          this.receberDano(dano, oponente)
+        }
+      }
+
+      comportamentoAleatorio(jogador: Personagem){
+        const chanceDesucesso = Math.random()
+        if (chanceDesucesso < 0.5) {
+          console.log("Observar o oponente...")
+        } else {
+          this.atacar(jogador)
+        }
+      }
 }
